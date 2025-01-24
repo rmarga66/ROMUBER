@@ -100,13 +100,9 @@ if submit:
         - Date et heure : {date_heure} à {heure}<br><br>
 
         Veuillez valider ou refuser cette demande :<br>
-        <button style='color:white;background-color:blue;padding:10px;border:none;border-radius:5px;'>
-        <a style='color:white;text-decoration:none;' href="mailto:{email}?subject=Validation de la demande&body=Bonjour {prenom} {nom},\n\nVotre demande a été validée.\n\nBien à vous,\nROMUBER">Valider</a>
-        </button>
+        <a style='display:inline-block;color:white;background-color:blue;padding:10px 20px;text-decoration:none;border-radius:5px;' href="mailto:{email}?subject=Validation de la demande&body=Bonjour {prenom} {nom},\n\nVotre demande a été validée.\n\nBien à vous,\nROMUBER">Valider</a>
         &nbsp;
-        <button style='color:white;background-color:red;padding:10px;border:none;border-radius:5px;'>
-        <a style='color:white;text-decoration:none;' href="mailto:{email}?subject=Refus de la demande&body=Bonjour {prenom} {nom},\n\nVotre demande ne peut pas être prise en charge.\n\nBien à vous,\nROMUBER">Refuser</a>
-        </button>
+        <a style='display:inline-block;color:white;background-color:red;padding:10px 20px;text-decoration:none;border-radius:5px;' href="mailto:{email}?subject=Refus de la demande&body=Bonjour {prenom} {nom},\n\nVotre demande ne peut pas être prise en charge.\n\nBien à vous,\nROMUBER">Refuser</a>
         """
 
         admin_ok = envoyer_email(
