@@ -34,7 +34,7 @@ def envoyer_email(destinataire, sujet, contenu):
 st.set_page_config(page_title="ROMUBER", page_icon="logo.png", layout="wide")  # Met un favicon et une mise en page large
 
 # Ajouter un logo en haut à gauche
-st.image("logo.png", width=200)  # Remplacez "logo.png" par le chemin de votre logo
+# st.image("logo.png", width=200)  # Désactivez cette ligne temporairement
 st.title("ROMUBER - Interface de réservation")
 
 # Formulaire utilisateur
