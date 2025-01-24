@@ -36,24 +36,24 @@ st.set_page_config(page_title="ROMUBER", layout="wide")  # Met une mise en page 
 # Ajouter un logo en haut à gauche
 st.image("logo.png", width=150)
 
-st.title("ROMUBER - Let's go baby !")
+st.title("ROMUBER - Interface de réservation")
 
 # Formulaire utilisateur
 with st.form("formulaire_demande"):
-    nom = st.text_input("Nom 👇🏻 :")
-    prenom = st.text_input("Prénom 👇🏻 :")
-    telephone = st.text_input("Téléphone ☎️ :")
-    email = st.text_input("Email 📧 :")
+    nom = st.text_input("Nom :")
+    prenom = st.text_input("Prénom :")
+    telephone = st.text_input("Téléphone :")
+    email = st.text_input("Email :")
 
     st.markdown("### Choix de prestations :")
     prestation1 = st.text_input("Prestation 1 (facultatif) :", "")
     prestation2 = st.text_input("Prestation 2 (facultatif) :", "")
     prestation3 = st.text_input("Prestation 3 (facultatif) :", "")
 
-    commentaires = st.text_area("Commentaires 🗒️ :")
+    commentaires = st.text_area("Commentaires :")
 
-    date_heure = st.date_input("Date souhaitée 🗓️ :")
-    heure = st.time_input("Heure souhaitée 🕰️ :")
+    date_heure = st.date_input("Date souhaitée :")
+    heure = st.time_input("Heure souhaitée :")
 
     submit = st.form_submit_button("Envoyer la demande")
 
@@ -79,12 +79,38 @@ if submit:
         ROMUBER
         """
 
-        # Envoi de l'email
-        if envoyer_email(
+        # Envoi de l'email au demandeur
+        demandeur_ok = envoyer_email(
             destinataire=email,
             sujet="Récapitulatif de votre demande - ROMUBER",
             contenu=recapitulatif.replace('\n', '<br>'),
-        ):
-            st.success("Ta demande a été envoyée bébé !")
+        )
+
+        # Envoi de l'email à l'administrateur pour validation
+        bouton_validation = f"""
+        Bonjour,
+
+        Une nouvelle demande a été reçue :
+        - Nom : {nom}
+        - Prénom : {prenom}
+        - Téléphone : {telephone}
+        - Email : {email}
+        - Prestations choisies : {', '.join(prestations_choisies) if prestations_choisies else 'Aucune'}
+        - Commentaires : {commentaires}
+        - Date et heure : {date_heure} à {heure}
+
+        Veuillez valider ou refuser cette demande :
+        <a href="mailto:{email}?subject=Validation de la demande&body=Bonjour {prenom} {nom},\n\nVotre demande a été validée.\n\nBien à vous,\nROMUBER">Valider</a>
+        <a href="mailto:{email}?subject=Refus de la demande&body=Bonjour {prenom} {nom},\n\nVotre demande ne peut pas être prise en charge.\n\nBien à vous,\nROMUBER">Refuser</a>
+        """
+
+        admin_ok = envoyer_email(
+            destinataire=EMAIL_SENDER,
+            sujet="Nouvelle demande de réservation - ROMUBER",
+            contenu=bouton_validation.replace('\n', '<br>'),
+        )
+
+        if demandeur_ok and admin_ok:
+            st.success("Votre demande a été envoyée avec succès, et une notification a été transmise à l'administrateur.")
         else:
-            st.error("Une erreur est survenue lors de l'envoi de votre demande.")
+            st.error("Une erreur est survenue lors de l'envoi de la demande.")
