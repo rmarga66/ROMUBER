@@ -8,7 +8,7 @@ from datetime import datetime
 SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587
 EMAIL_SENDER = "romainmargalet@gmail.com"
-EMAIL_PASSWORD = "oipm xjxx lyab obeq"  # Remplacez par votre mot de passe (ou utilisez une méthode sécurisée)
+EMAIL_PASSWORD = "votre_mot_de_passe"  # Remplacez par votre mot de passe (ou utilisez une méthode sécurisée)
 
 # Fonction pour envoyer un email
 def envoyer_email(destinataire, sujet, contenu):
@@ -33,6 +33,9 @@ def envoyer_email(destinataire, sujet, contenu):
 # Interface Streamlit
 st.set_page_config(page_title="ROMUBER", layout="wide")  # Met une mise en page large
 
+# Ajouter un logo en haut à gauche
+st.sidebar.image("logo.png", use_column_width=True)
+
 st.title("ROMUBER - Interface de réservation")
 
 # Formulaire utilisateur
@@ -43,9 +46,9 @@ with st.form("formulaire_demande"):
     email = st.text_input("Email :")
 
     st.markdown("### Choix de prestations :")
-    prestation1 = st.checkbox("Prestation 1")
-    prestation2 = st.checkbox("Prestation 2")
-    prestation3 = st.checkbox("Prestation 3")
+    prestation1 = st.text_input("Prestation 1 (facultatif) :", "")
+    prestation2 = st.text_input("Prestation 2 (facultatif) :", "")
+    prestation3 = st.text_input("Prestation 3 (facultatif) :", "")
 
     commentaires = st.text_area("Commentaires :")
 
@@ -60,13 +63,7 @@ if submit:
         st.error("Veuillez remplir tous les champs obligatoires.")
     else:
         # Création du récapitulatif
-        prestations_choisies = []
-        if prestation1:
-            prestations_choisies.append("Prestation 1")
-        if prestation2:
-            prestations_choisies.append("Prestation 2")
-        if prestation3:
-            prestations_choisies.append("Prestation 3")
+        prestations_choisies = [p for p in [prestation1, prestation2, prestation3] if p]
 
         recapitulatif = f"""
         Bonjour {prenom} {nom},
