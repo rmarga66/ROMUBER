@@ -31,7 +31,8 @@ def envoyer_email(destinataire, sujet, contenu):
         return False
 
 # Interface Streamlit
-st.set_page_config(page_title="ROMUBER", page_icon="logo.png", layout="wide")  # Met un favicon et une mise en page large
+st.set_page_config(page_title="ROMUBER", page_icon=None)  # Supprimez l'icône temporairement
+
 
 # Ajouter un logo en haut à gauche
 # st.image("logo.png", width=200)  # Désactivez cette ligne temporairement
