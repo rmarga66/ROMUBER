@@ -36,26 +36,26 @@ st.set_page_config(page_title="ROMUBER", layout="wide")  # Met une mise en page 
 # Ajouter un logo en haut à gauche
 st.image("logo.png", width=150)
 
-st.title("ROMUBER - Interface de réservation")
+st.title("ROMUBER - RESERVE TA PRESTA")
 
 # Formulaire utilisateur
 with st.form("formulaire_demande"):
-    nom = st.text_input("Nom :")
-    prenom = st.text_input("Prénom :")
-    telephone = st.text_input("Téléphone :")
-    email = st.text_input("Email :")
+    nom = st.text_input("Nom 👇🏻 :")
+    prenom = st.text_input("Prénom 👇🏻 :")
+    telephone = st.text_input("Téléphone ☎️ :")
+    email = st.text_input("Email 📧 :")
 
     st.markdown("### Choix de prestations :")
     prestation1 = st.text_input("Prestation 1 (facultatif) :", "")
     prestation2 = st.text_input("Prestation 2 (facultatif) :", "")
     prestation3 = st.text_input("Prestation 3 (facultatif) :", "")
 
-    commentaires = st.text_area("Commentaires :")
+    commentaires = st.text_area("Commentaires 🗒️ :")
 
-    date_heure = st.date_input("Date souhaitée :")
-    heure = st.time_input("Heure souhaitée :")
+    date_heure = st.date_input("Date souhaitée 🗓️ :")
+    heure = st.time_input("Heure souhaitée 🕰️ :")
 
-    submit = st.form_submit_button("Envoyer la demande")
+    submit = st.form_submit_button("Envoyer la demande 📲")
 
 # Gestion de la soumission du formulaire
 if submit:
@@ -112,6 +112,6 @@ if submit:
         )
 
         if demandeur_ok and admin_ok:
-            st.success("Votre demande a été envoyée avec succès, et une notification a été transmise à l'administrateur.")
+            st.success("Ta demande a été envoyée bébé, tu recevras un mail de validation ou de refus de Romain Margalet.")
         else:
             st.error("Une erreur est survenue lors de l'envoi de la demande.")
