@@ -8,7 +8,7 @@ from datetime import datetime
 SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587
 EMAIL_SENDER = "romainmargalet@gmail.com"
-EMAIL_PASSWORD = "ipm xjxx lyab obeq"  # Remplacez par votre mot de passe (ou utilisez une méthode sécurisée)
+EMAIL_PASSWORD = "votre_mot_de_passe"  # Remplacez par votre mot de passe (ou utilisez une méthode sécurisée)
 
 # Fonction pour envoyer un email
 def envoyer_email(destinataire, sujet, contenu):
