@@ -8,7 +8,7 @@ from datetime import datetime
 SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587
 EMAIL_SENDER = "romainmargalet@gmail.com"
-EMAIL_PASSWORD = "votre_mot_de_passe"  # Remplacez par votre mot de passe (ou utilisez une méthode sécurisée)
+EMAIL_PASSWORD = "oipm xjxx lyab obeq"  # Remplacez par votre mot de passe (ou utilisez une méthode sécurisée)
 
 # Fonction pour envoyer un email
 def envoyer_email(destinataire, sujet, contenu):
@@ -36,24 +36,24 @@ st.set_page_config(page_title="ROMUBER", layout="wide")  # Met une mise en page 
 # Ajouter un logo en haut à gauche
 st.image("logo.png", width=150)
 
-st.title("ROMUBER - Interface de réservation")
+st.title("ROMUBER - Let's go baby !")
 
 # Formulaire utilisateur
 with st.form("formulaire_demande"):
-    nom = st.text_input("Nom :")
+    nom = st.text_input("Nom 👉🏻:")
     prenom = st.text_input("Prénom :")
-    telephone = st.text_input("Téléphone :")
-    email = st.text_input("Email :")
+    telephone = st.text_input("Téléphone ☎️ :")
+    email = st.text_input("Email 📧 :")
 
     st.markdown("### Choix de prestations :")
     prestation1 = st.text_input("Prestation 1 (facultatif) :", "")
     prestation2 = st.text_input("Prestation 2 (facultatif) :", "")
     prestation3 = st.text_input("Prestation 3 (facultatif) :", "")
 
-    commentaires = st.text_area("Commentaires :")
+    commentaires = st.text_area("Commentaires 🗒️ :")
 
-    date_heure = st.date_input("Date souhaitée :")
-    heure = st.time_input("Heure souhaitée :")
+    date_heure = st.date_input("Date souhaitée 🗓️ :")
+    heure = st.time_input("Heure souhaitée 🕰️ :")
 
     submit = st.form_submit_button("Envoyer la demande")
 
@@ -85,6 +85,6 @@ if submit:
             sujet="Récapitulatif de votre demande - ROMUBER",
             contenu=recapitulatif.replace('\n', '<br>'),
         ):
-            st.success("Votre demande a été envoyée avec succès !")
+            st.success("Ta demande a été envoyée bébé !")
         else:
             st.error("Une erreur est survenue lors de l'envoi de votre demande.")
