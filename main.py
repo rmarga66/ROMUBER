@@ -88,26 +88,31 @@ if submit:
 
         # Envoi de l'email à l'administrateur pour validation
         bouton_validation = f"""
-        Bonjour,
+        Bonjour,<br><br>
 
-        Une nouvelle demande a été reçue :
-        - Nom : {nom}
-        - Prénom : {prenom}
-        - Téléphone : {telephone}
-        - Email : {email}
-        - Prestations choisies : {', '.join(prestations_choisies) if prestations_choisies else 'Aucune'}
-        - Commentaires : {commentaires}
-        - Date et heure : {date_heure} à {heure}
+        Une nouvelle demande a été reçue :<br>
+        - Nom : {nom}<br>
+        - Prénom : {prenom}<br>
+        - Téléphone : {telephone}<br>
+        - Email : {email}<br>
+        - Prestations choisies : {', '.join(prestations_choisies) if prestations_choisies else 'Aucune'}<br>
+        - Commentaires : {commentaires}<br>
+        - Date et heure : {date_heure} à {heure}<br><br>
 
-        Veuillez valider ou refuser cette demande :
-        <a href="mailto:{email}?subject=Validation de la demande&body=Bonjour {prenom} {nom},\n\nVotre demande a été validée.\n\nBien à vous,\nROMUBER">Valider</a>
-        <a href="mailto:{email}?subject=Refus de la demande&body=Bonjour {prenom} {nom},\n\nVotre demande ne peut pas être prise en charge.\n\nBien à vous,\nROMUBER">Refuser</a>
+        Veuillez valider ou refuser cette demande :<br>
+        <button style='color:white;background-color:blue;padding:10px;border:none;border-radius:5px;'>
+        <a style='color:white;text-decoration:none;' href="mailto:{email}?subject=Validation de la demande&body=Bonjour {prenom} {nom},\n\nVotre demande a été validée.\n\nBien à vous,\nROMUBER">Valider</a>
+        </button>
+        &nbsp;
+        <button style='color:white;background-color:red;padding:10px;border:none;border-radius:5px;'>
+        <a style='color:white;text-decoration:none;' href="mailto:{email}?subject=Refus de la demande&body=Bonjour {prenom} {nom},\n\nVotre demande ne peut pas être prise en charge.\n\nBien à vous,\nROMUBER">Refuser</a>
+        </button>
         """
 
         admin_ok = envoyer_email(
             destinataire=EMAIL_SENDER,
             sujet="Nouvelle demande de réservation - ROMUBER",
-            contenu=bouton_validation.replace('\n', '<br>'),
+            contenu=bouton_validation,
         )
 
         if demandeur_ok and admin_ok:
