@@ -69,27 +69,24 @@ if submit:
             prestations_choisies.append("Prestation 3")
 
         recapitulatif = f"""
-        <p>Bonjour {prenom} {nom},</p>
-        <p>Voici un récapitulatif de votre demande :</p>
-        <ul>
-            <li><b>Téléphone :</b> {telephone}</li>
-            <li><b>Email :</b> {email}</li>
-            <li><b>Prestations choisies :</b> {', '.join(prestations_choisies) if prestations_choisies else 'Aucune'}</li>
-            <li><b>Commentaires :</b> {commentaires}</li>
-            <li><b>Date et heure :</b> {date_heure} à {heure}</li>
-        </ul>
-        <p>Merci de cliquer sur une des options ci-dessous :</p>
-        <a href="mailto:{email}?subject=Validation de votre demande&body=Bonjour.%0D%0AVotre demande est validée.%0D%0A{recapitulatif}">Valider</a><br>
-        <a href="mailto:{email}?subject=Refus de votre demande&body=Bonjour.%0D%0AVotre demande ne peut être prise en charge.%0D%0A{recapitulatif}">Refuser</a><br>
-        <a href="mailto:{email}?subject=Modification de votre demande&body=Bonjour.%0D%0AVotre demande va être modifiée. Si vous acceptez, répondre OK à ce mail. Si vous refusez, répondre NON à ce mail.%0D%0A{recapitulatif}">Modifier</a>
-        <p>Bien à vous,<br>ROMUBER</p>
+        Bonjour {prenom} {nom},
+
+        Voici un récapitulatif de votre demande :
+        - Téléphone : {telephone}
+        - Email : {email}
+        - Prestations choisies : {', '.join(prestations_choisies) if prestations_choisies else 'Aucune'}
+        - Commentaires : {commentaires}
+        - Date et heure : {date_heure} à {heure}
+
+        Bien à vous,
+        ROMUBER
         """
 
         # Envoi de l'email
         if envoyer_email(
             destinataire=email,
             sujet="Récapitulatif de votre demande - ROMUBER",
-            contenu=recapitulatif,
+            contenu=recapitulatif.replace('\n', '<br>'),
         ):
             st.success("Votre demande a été envoyée avec succès !")
         else:
