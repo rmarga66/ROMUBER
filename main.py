@@ -2,127 +2,92 @@ import streamlit as st
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-from urllib.parse import quote
+from datetime import datetime
 
-# Configuration de l'email
-def envoyer_email(destinataire, sujet, message):
-    expediteur = "romainmargalet@gmail.com"  # Remplacez par votre adresse email
-    mot_de_passe = "oipm xjxx lyab obeq"  # Remplacez par votre mot de passe
+# Configuration de l'email d'envoi
+SMTP_SERVER = "smtp.gmail.com"
+SMTP_PORT = 587
+EMAIL_SENDER = "romainmargalet@gmail.com"
+EMAIL_PASSWORD = "oipm xjxx lyab obeq"  # Remplacez par votre mot de passe (ou utilisez une méthode sécurisée)
 
+# Fonction pour envoyer un email
+def envoyer_email(destinataire, sujet, contenu):
     try:
         msg = MIMEMultipart()
-        msg['From'] = expediteur
-        msg['To'] = destinataire
-        msg['Subject'] = sujet
+        msg["From"] = EMAIL_SENDER
+        msg["To"] = destinataire
+        msg["Subject"] = sujet
 
-        msg.attach(MIMEText(message, 'html'))
+        msg.attach(MIMEText(contenu, "html"))
 
-        with smtplib.SMTP('smtp.gmail.com', 587) as server:
+        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
             server.starttls()
-            server.login(expediteur, mot_de_passe)
-            server.send_message(msg)
+            server.login(EMAIL_SENDER, EMAIL_PASSWORD)
+            server.sendmail(EMAIL_SENDER, destinataire, msg.as_string())
 
-        st.success("Email envoyé avec succès ! Merci pour votre confiance !")
+        return True
     except Exception as e:
-        st.error(f"Erreur lors de l'envoi de l'email: {e}")
+        st.error(f"Erreur lors de l'envoi de l'email : {e}")
+        return False
 
-# Interface principale de l'application
-st.set_page_config(page_title="Romain Prestation UBER", page_icon="🧔🏻‍♂️", layout="centered")
+# Interface Streamlit
+st.set_page_config(page_title="ROMUBER", layout="wide")  # Met une mise en page large
 
-# Ajout du logo
-st.image("logo.png", width=130)
+st.title("ROMUBER - Interface de réservation")
 
-st.markdown("<h3 style='text-align: center;'>Demande de Prestation 📲</h3>", unsafe_allow_html=True)
-st.markdown("<h6 style='text-align: center; color: gray;'>RM</h6>", unsafe_allow_html=True)
+# Formulaire utilisateur
+with st.form("formulaire_demande"):
+    nom = st.text_input("Nom :")
+    prenom = st.text_input("Prénom :")
+    telephone = st.text_input("Téléphone :")
+    email = st.text_input("Email :")
 
+    st.markdown("### Choix de prestations :")
+    prestation1 = st.checkbox("Prestation 1")
+    prestation2 = st.checkbox("Prestation 2")
+    prestation3 = st.checkbox("Prestation 3")
 
-# Formulaire pour les informations du docteur
-docteur_nom = st.text_input("Nom ")
-docteur_prenom = st.text_input("Prénom")
-docteur_telephone = st.text_input("Téléphone ☎️")
-docteur_mail = st.text_input("Email 📧")
+    commentaires = st.text_area("Commentaires :")
 
+    date_heure = st.date_input("Date souhaitée :")
+    heure = st.time_input("Heure souhaitée :")
 
-if st.button("Envoyer la prestation à Romain Margalet"):
-    if not (docteur_nom and docteur_prenom and docteur_telephone and docteur_mail and patient_nom and patient_prenom and patient_telephone):
+    submit = st.form_submit_button("Envoyer la demande")
+
+# Gestion de la soumission du formulaire
+if submit:
+    if not (nom and prenom and telephone and email):
         st.error("Veuillez remplir tous les champs obligatoires.")
     else:
-        sujet = f"DEMANDE de PRESTATION {docteur_nom}"
-        validation_link = f"mailto:{quote(docteur_mail)}?subject={quote('Réponse à votre demande de PRESTATION')}&body={quote('Bonjour, Nous vous informons que votre demande de PRESTATION a été validée')}"
-        refusal_link = f"mailto:{quote(docteur_mail)}?subject={quote('Réponse à votre demande de PRESTATION')}&body={quote('Bonjour, Nous vous informons que votre demande de PRESTATION a été refusée pour le motif suivant :')}"
-        message = f"""
-        <h3>Nouvelle demande de PEC</h3>
-        <p><strong>Docteur :</strong> {docteur_nom} {docteur_prenom}</p>
-        <p><strong>Téléphone :</strong> {docteur_telephone}</p>
-        <p><strong>Email :</strong> {docteur_mail}</p>
-        <hr>     
-        <hr>
-        <p><a href='{validation_link}' style='color: white; background-color: #007BFF; padding: 10px 20px; text-decoration: none; border-radius: 5px;'>Valider la PEC</a></p>
-        <p><a href='{refusal_link}' style='color: white; background-color: #FF5733; padding: 10px 20px; text-decoration: none; border-radius: 5px;'>Refuser la PEC</a></p>
+        # Création du récapitulatif
+        prestations_choisies = []
+        if prestation1:
+            prestations_choisies.append("Prestation 1")
+        if prestation2:
+            prestations_choisies.append("Prestation 2")
+        if prestation3:
+            prestations_choisies.append("Prestation 3")
+
+        recapitulatif = f"""
+        Bonjour {prenom} {nom},
+
+        Voici un récapitulatif de votre demande :
+        - Téléphone : {telephone}
+        - Email : {email}
+        - Prestations choisies : {', '.join(prestations_choisies) if prestations_choisies else 'Aucune'}
+        - Commentaires : {commentaires}
+        - Date et heure : {date_heure} à {heure}
+
+        Bien à vous,
+        ROMUBER
         """
-        envoyer_email("romain.margalet@bastide-medical.fr", sujet, message)
 
-# Design coloré
-def add_custom_css():
-    st.markdown(
-        """
-        <style>
-        body {
-            background-color: #f0f8ff;
-            color: #333;
-            font-family: Arial, sans-serif;
-        }
-        .stButton>button {
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-        .stButton>button:hover {
-            background-color: #0056b3;
-        }
-        .stTextInput>div>input {
-            border: 2px solid #007BFF;
-            padding: 8px;
-            border-radius: 5px;
-        }
-        .stTextInput>div>input:focus {
-            outline: none;
-            border: 2px solid #0056b3;
-        }
-        textarea {
-            border: 2px solid #007BFF;
-            padding: 8px;
-            border-radius: 5px;
-        }
-        textarea:focus {
-            outline: none;
-            border: 2px solid #0056b3;
-        }
-        .footer {
-            position: centered;
-            bottom: 10px;
-            right: 10px;
-            font-style: italic;
-            color: #40E0D0; /* Bleu turquoise */
-        }
-        </style>
-        """,
-        unsafe_allow_html=True,
-    )
-
-add_custom_css()
-
-# Ajouter une phrase en bas de la page
-st.markdown("""
-<div class="footer">
-    Vous pouvez aussi joindre Romain MARGALET 
-</div>
-""", unsafe_allow_html=True)
+        # Envoi de l'email
+        if envoyer_email(
+            destinataire=email,
+            sujet="Récapitulatif de votre demande - ROMUBER",
+            contenu=recapitulatif.replace('\n', '<br>'),
+        ):
+            st.success("Votre demande a été envoyée avec succès !")
+        else:
+            st.error("Une erreur est survenue lors de l'envoi de votre demande.")
