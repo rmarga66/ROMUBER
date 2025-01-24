@@ -31,11 +31,8 @@ def envoyer_email(destinataire, sujet, contenu):
         return False
 
 # Interface Streamlit
-st.set_page_config(page_title="ROMUBER", page_icon=None)  # Supprimez l'icône temporairement
+st.set_page_config(page_title="ROMUBER", layout="wide")  # Met une mise en page large
 
-
-# Ajouter un logo en haut à gauche
-# st.image("logo.png", width=200)  # Désactivez cette ligne temporairement
 st.title("ROMUBER - Interface de réservation")
 
 # Formulaire utilisateur
