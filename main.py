@@ -40,8 +40,8 @@ st.title("ROMUBER - Let's go baby !")
 
 # Formulaire utilisateur
 with st.form("formulaire_demande"):
-    nom = st.text_input("Nom 👉🏻:")
-    prenom = st.text_input("Prénom :")
+    nom = st.text_input("Nom 👇🏻 :")
+    prenom = st.text_input("Prénom 👇🏻 :")
     telephone = st.text_input("Téléphone ☎️ :")
     email = st.text_input("Email 📧 :")
 
