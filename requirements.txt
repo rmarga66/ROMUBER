@@ -1,2 +1,2 @@
-streamlit==1.25.0  # Version actuelle ou plus récente
-email-validator  # Pour valider les emails
+streamlit
+streamlit-authenticator
