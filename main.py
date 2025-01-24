@@ -36,7 +36,7 @@ st.set_page_config(page_title="ROMUBER", layout="wide")  # Met une mise en page 
 # Ajouter un logo en haut à gauche
 st.image("logo.png", width=150)
 
-st.title("📌 ROMUBER - RESERVE TA PRESTA 📌")
+st.title("📌 ROM - UBER - RESERVE TA PRESTA 📌")
 
 # Formulaire utilisateur
 with st.form("formulaire_demande"):
